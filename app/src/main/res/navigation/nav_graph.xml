@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.nd1.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addEditFragment"
+            app:destination="@id/addEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.example.nd1.TimerFragment"
+        android:label="timer_fragment"
+        tools:layout="@layout/timer_fragment" >
+        <argument
+            android:name="habitId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditFragment"
+        android:name="com.example.nd1.AddEditFragment"
+        android:label="add_edit_fragment"
+        tools:layout="@layout/add_edit_fragment" >
+        <argument
+            android:name="testHabit"
+            app:argType="com.example.nd1.Habit" />
+    </fragment>
+</navigation>
