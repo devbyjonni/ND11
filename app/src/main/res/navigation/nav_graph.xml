@@ -32,7 +32,7 @@
         android:label="add_edit_fragment"
         tools:layout="@layout/add_edit_fragment" >
         <argument
-            android:name="testHabit"
-            app:argType="com.example.nd1.Habit" />
+            android:name="habitId"
+            app:argType="integer" />
     </fragment>
 </navigation>

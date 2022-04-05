@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nd1.databinding.AddEditFragmentBinding
-import com.example.nd1.databinding.TimerFragmentBinding
 
 class AddEditFragment : Fragment() {
 
@@ -21,7 +19,7 @@ class AddEditFragment : Fragment() {
     private var _binding: AddEditFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private var viewModel: SharedMainViewModel? = null
+    private var viewModel: MainViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,14 +52,7 @@ class AddEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = activity?.run {
-            ViewModelProvider(requireActivity())[SharedMainViewModel::class.java]
-        }
-
-        viewModel?.load()
-
-        args.testHabit?.let { habits ->
-            binding.nameTextView.setText(habits.title)
-            Log.i("LOGTEST", "HABIT")
+            ViewModelProvider(requireActivity())[MainViewModel::class.java]
         }
     }
 

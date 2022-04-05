@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,7 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: SharedMainViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var mainAdapter: MainAdapter
 
     override fun onCreateView(
@@ -25,7 +26,19 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(SharedMainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        binding.floatingActionButton.setOnClickListener{
+            val action = MainFragmentDirections.actionMainFragmentToAddEditFragment(habitId = NEW_HABIT_ID)
+            findNavController().navigate(action)
+        }
+
+        viewModel.habitList?.observe(viewLifecycleOwner, Observer {
+            Log.i("noteLogging", it.toString())
+            mainAdapter = MainAdapter(it, this@MainFragment)
+            binding.habitsRecycleView.layoutManager = LinearLayoutManager(activity)
+            binding.habitsRecycleView.adapter = mainAdapter
+        })
 
         return binding.root
     }
@@ -33,19 +46,12 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.floatingActionButton.setOnClickListener{
-            val habit = Habit(0,"Test","Test",false)
-            val action = MainFragmentDirections.actionMainFragmentToAddEditFragment(testHabit = habit)
-            findNavController().navigate(action)
-        }
+       // addSampleData()
+    }
 
-        viewModel.model.observe(viewLifecycleOwner) {
-            viewModel.model.value?.let { habits ->
-                mainAdapter = MainAdapter(habits, this@MainFragment)
-                binding.habitsRecycleView.layoutManager = LinearLayoutManager(activity)
-                binding.habitsRecycleView.adapter = mainAdapter
-            }
-        }
+    private fun addSampleData(): Boolean {
+        viewModel.addSampleData()
+        return true
     }
 
     override fun onDestroyView() {

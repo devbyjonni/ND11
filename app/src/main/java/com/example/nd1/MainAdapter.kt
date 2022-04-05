@@ -7,10 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nd1.data.HabitEntity
 import com.example.nd1.databinding.MainItemBinding
 
 
-class MainAdapter(private val habits: List<Habit>, private val listener: MainAdapterItemListener) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(private val habits: List<HabitEntity>, private val listener: MainAdapterItemListener) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: MainItemBinding) : RecyclerView.ViewHolder(binding.root)
 
