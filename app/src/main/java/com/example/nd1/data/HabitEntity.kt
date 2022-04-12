@@ -27,13 +27,3 @@ data class HabitEntity(
     constructor(title: String, description: String, completed: Boolean, date: Date, timerSeconds: Long, totalCompletions: Int, dateStr: String) : this(NEW_HABIT_ID, title, description, completed, date, timerSeconds, totalCompletions, dateStr)
 }
 
-@Parcelize
-@Entity(tableName = "settings")
-data class SettingsEntity(
-    @PrimaryKey(autoGenerate = false)
-    var id: Int,
-    var date: Date,
-    var didLoadSampleData: Boolean,
-) : Parcelable {
-    constructor() : this(NEW_SETTINGS_ID, Date(), true)
-}

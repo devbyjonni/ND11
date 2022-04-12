@@ -6,11 +6,11 @@ import java.util.*
 class SampleDataProvider {
 
     companion object {
-        private val habit1 = "Meditate"
-        private val habit2 = "Code lessons"
-        private val habit3 = "Workout"
-        private val habit4 = "Read"
-        private val habit5 = "Medicine"
+        private const val habit1 = "Meditate"
+        private const val habit2 = "Code lessons"
+        private const val habit3 = "Workout"
+        private const val habit4 = "Read"
+        private const val habit5 = "Medicine"
 
         private fun getDate(diff: Long): Date {
             return Date(Date().time + diff)
@@ -18,10 +18,9 @@ class SampleDataProvider {
 
         private fun getDateStr(): String {
             val date = Calendar.getInstance().time
-            val formatter = SimpleDateFormat.getDateInstance() //or use getDateInstance()
-            val formattedDate = formatter.format(date)
+            val formatter = SimpleDateFormat.getDateInstance()
 
-            return formattedDate
+            return formatter.format(date)
         }
 
         fun getHabits() = arrayListOf(

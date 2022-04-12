@@ -39,7 +39,7 @@ class AddEditViewModel(app: Application) : AndroidViewModel(app) {
             it.title = it.title.trim()
 
             if (it.id == NEW_HABIT_ID && it.title.isEmpty()) {
-                //Empty
+                //Empty object
                 return
             }
 
