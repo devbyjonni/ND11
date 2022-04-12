@@ -6,11 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [HabitEntity::class], version = 1, exportSchema = false)
+@Database(entities = [HabitEntity::class, SettingsEntity::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 
-    abstract fun noteDao(): NoteDao?
+    abstract fun habiteDao(): HabitDao?
+    abstract fun settingsDao(): SettingsDao?
 
     companion object {
         private var INSTANCE: AppDatabase? = null
