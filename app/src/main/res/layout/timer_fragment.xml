@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:visibility="visible"
     tools:context=".TimerFragment">
 
     <Button
@@ -14,52 +15,132 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#000000"
-        android:text="Cancel"
+        android:text="@string/doneBtnText"
+        android:textAlignment="viewStart"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/timerSaveButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="#000000"
-        android:text="Savel"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/timerDescriptionTextView"
+        android:id="@+id/textView4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Text"
+        android:layout_marginTop="32dp"
+        android:text="@string/completed"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/timerTotalCompletionsTextView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerTextView11" />
+        app:layout_constraintTop_toBottomOf="@+id/timerTimeTextView" />
 
     <TextView
-        android:id="@+id/timerTextView11"
+        android:id="@+id/timerTotalCompletionsTextView"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/completionsDefaultText"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerTimeTextView" />
+
+    <TextView
+        android:id="@+id/timerTimeTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="00:10:00"
+        android:text="@string/timerDefaultText"
         android:textColor="@color/white"
-        android:textSize="48sp"
+        android:textSize="58sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habitTitletextView" />
+
+    <TextView
+        android:id="@+id/habitTitletextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/workout"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerCancelButton" />
+
+    <Button
+        android:id="@+id/pauseBtn"
+        android:layout_width="120dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/pause"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerTotalCompletionsTextView" />
+
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="120dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/start"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/stopBtn"
+        android:layout_width="120dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/stop"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <ImageView
+        android:id="@+id/timerCompletedImageView"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/completed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habitTitletextView"
+        app:srcCompat="@drawable/ellipse_completed"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/timerCompletedDefaultImageView"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
+        android:alpha="0.5"
+        android:contentDescription="@string/completed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habitTitletextView"
+        app:srcCompat="@drawable/ellipse_white"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

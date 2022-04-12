@@ -33,8 +33,7 @@ class MainAdapter(private val habits: List<HabitEntity>, private val listener: M
 
         with(holder.binding) {
             titleTextView.text = habit.title
-            val completions = habit.totalCompletions.toString()
-            completionsTextView.text = "Times: $completions"
+            completionsTextView.text = habit.totalCompletions.toString()
 
             val seconds = habit.timerSeconds
             val hours = seconds / 3600

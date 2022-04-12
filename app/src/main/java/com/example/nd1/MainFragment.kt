@@ -86,13 +86,13 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
     override fun onPause() {
         super.onPause()
 
-        Log.i("LOGTEST", "onPause")
+        Log.i(TAG, "onPause")
     }
 
     override fun onStart() {
         super.onStart()
         viewModel.getAllSettings()
-        Log.i("LOGTEST", "start")
+        Log.i(TAG, "onStart")
     }
 
     override fun didClickHabitBtn(id: Int) {

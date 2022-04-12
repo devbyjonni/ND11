@@ -74,7 +74,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 var settings: SettingsEntity? =
                     database?.settingsDao()?.getSettingsById(NEW_SETTINGS_ID)
                 if (settings != null) {
-                    Log.i("LOGTEST", "SETTINGS EXIST!")
+                    Log.i(TAG, "SETTINGS EXIST!")
 
                     settings.date.let { it ->
 
@@ -85,17 +85,17 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                         val formattedTodayDate = formatter.format(date)
 
                         if (formattedSettingsDate?.compareTo(formattedTodayDate)!! > 0) {
-                            Log.i("LOGTEST", "Today date is less than given date")
+                            Log.i(TAG, "Today date is less than given date")
 
                         } else if (formattedSettingsDate.compareTo(formattedTodayDate)!! < 0) {
-                            Log.i("LOGTEST", "Today date is grater than given date")
+                            Log.i(TAG, "Today date is grater than given date")
                             addSampleData(date)
                             database?.habiteDao()?.getAll(getDateStr(date))
                             settings!!.date = date
                             database?.settingsDao()?.insertSetting(settings!!)
 
                         } else if (formattedSettingsDate?.compareTo(formattedTodayDate) == 0) {
-                            Log.i("LOGTEST", "Same1 date")
+                            Log.i(TAG, "Same date")
 
                         } else {
 
@@ -103,7 +103,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                     }
 
                 } else {
-                    Log.i("LOGTEST", "DID CREATE SETTINGS")
+                    Log.i(TAG, "DID CREATE SETTINGS")
                     settings = SettingsEntity()
                     database?.settingsDao()?.insertSetting(settings)
                     addSampleData()
