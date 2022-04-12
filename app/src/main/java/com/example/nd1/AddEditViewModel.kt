@@ -1,16 +1,16 @@
 package com.example.nd1
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nd1.data.AppDatabase
 import com.example.nd1.data.HabitEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddEditViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -24,7 +24,10 @@ class AddEditViewModel(app: Application) : AndroidViewModel(app) {
                     if (habitId != NEW_HABIT_ID) {
                         database?.habiteDao()?.getHabitById(habitId)
                     } else {
-                        HabitEntity()
+                        val date = Date()
+                        val formatter = SimpleDateFormat.getDateInstance()
+                        val formattedDate = formatter.format(date)
+                        HabitEntity("", "", false, date, 0, 0, formattedDate)
                     }
                 currentHabit.postValue(habit!!)
             }
@@ -34,17 +37,17 @@ class AddEditViewModel(app: Application) : AndroidViewModel(app) {
     fun updateHabit() {
         currentHabit.value?.let {
             it.title = it.title.trim()
+
             if (it.id == NEW_HABIT_ID && it.title.isEmpty()) {
+                //Empty
                 return
             }
 
+            it.timerSeconds = it.timerSeconds * 60
+
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
-                    if (it.title.isEmpty()) {
-                       // database?.habiteDao()?.deleteHabit(it)
-                    } else {
-                        database?.habiteDao()?.insertHabit(it)
-                    }
+                    database?.habiteDao()?.insertHabit(it)
                 }
             }
         }

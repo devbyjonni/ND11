@@ -58,30 +58,27 @@ class AddEditFragment : Fragment() {
             minutesToString(minutes)
             binding.nameTextView.setSelection(cursorPosition)
         })
+
         viewModel.getHabitById(args.habitId)
-
-
 
         binding.addEditeekBar.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar,
-                                           progress: Int, fromUser: Boolean) {
-                // write custom code for progress is changed
+
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 binding.minutesTextView.setText(seek.progress.toString())
             }
 
             override fun onStartTrackingTouch(seek: SeekBar) {
-                // write custom code for progress is started
                 binding.minutesTextView.setText(seek.progress.toString())
             }
 
             override fun onStopTrackingTouch(seek: SeekBar) {
-                // write custom code for progress is stopped
-
                 binding.minutesTextView.setText(seek.progress.toString())
             }
         })
+
         minutesToString(viewModel.currentHabit.value?.timerSeconds ?: 0)
+
         return binding.root
     }
 
@@ -93,30 +90,18 @@ class AddEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    if (args.habitId == NEW_HABIT_ID) {
-        binding.nameTextView.requestFocus()
-    }
+        if (args.habitId == NEW_HABIT_ID) {
+            binding.nameTextView.requestFocus()
+        }
 
         val inputMethodManager: InputMethodManager =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(binding.nameTextView, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    private fun saveAndReturn() : Boolean {
+    private fun saveAndReturn(): Boolean {
+        viewModel.currentHabit.value?.timerSeconds = binding.minutesTextView.text.toString().toLong()
         viewModel.currentHabit.value?.title = binding.nameTextView.text.toString()
-
-        if (binding.minutesTextView.text.isNotEmpty()) {
-            val time = binding.minutesTextView.text.toString().toLong()
-            val toSeconds = time * 60
-            viewModel.currentHabit.value?.timerSeconds = toSeconds
-        }
-
-        val date = Date()
-        val formatter = SimpleDateFormat.getDateInstance()
-        val formattedDate = formatter.format(date)
-
-        viewModel.currentHabit.value?.date = date
-        viewModel.currentHabit.value?.dateStr = formattedDate
         viewModel.updateHabit()
 
         findNavController().navigateUp()

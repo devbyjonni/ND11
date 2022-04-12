@@ -24,7 +24,6 @@ data class HabitEntity(
     var dateStr: String,
 ) : Parcelable {
     constructor() : this(NEW_HABIT_ID, "", "", false, Date(), 10, 0, "")
-
     constructor(title: String, description: String, completed: Boolean, date: Date, timerSeconds: Long, totalCompletions: Int, dateStr: String) : this(NEW_HABIT_ID, title, description, completed, date, timerSeconds, totalCompletions, dateStr)
 }
 

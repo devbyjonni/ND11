@@ -45,7 +45,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         currentHabit.value?.let {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
-                        database?.habiteDao()?.insertHabit(it)
+                    database?.habiteDao()?.insertHabit(it)
                 }
             }
         }
@@ -61,7 +61,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
         for (index in 0 until 5) {
             val date = Date(currentDate.time + index)
-            var habit = HabitEntity("TEST $index","TEST $index",false, date,0,0,getDateStr(date))
+            var habit =
+                HabitEntity("TEST $index", "TEST $index", false, date, 0, 0, getDateStr(date))
             habitList.add(habit)
         }
         database?.habiteDao()?.insertAll(habitList)
@@ -70,29 +71,31 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun getAllSettings() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                var settings: SettingsEntity? = database?.settingsDao()?.getSettingsById(NEW_SETTINGS_ID)
+                var settings: SettingsEntity? =
+                    database?.settingsDao()?.getSettingsById(NEW_SETTINGS_ID)
                 if (settings != null) {
-                    Log.i("LOGTEST", "SETTINGS EXIST!" )
+                    Log.i("LOGTEST", "SETTINGS EXIST!")
 
                     settings.date.let { it ->
 
                         val date = Calendar.getInstance().time
-                        val formatter = SimpleDateFormat.getDateInstance() //or use getDateInstance()
+                        val formatter =
+                            SimpleDateFormat.getDateInstance() //or use getDateInstance()
                         val formattedSettingsDate = formatter.format(it)
                         val formattedTodayDate = formatter.format(date)
 
-                        if (formattedSettingsDate?.compareTo(formattedTodayDate)!! > 0 ){
-                            Log.i("LOGTEST", "Today date is less than given date" )
+                        if (formattedSettingsDate?.compareTo(formattedTodayDate)!! > 0) {
+                            Log.i("LOGTEST", "Today date is less than given date")
 
-                        }else if(formattedSettingsDate?.compareTo(formattedTodayDate)!! < 0 ){
-                            Log.i("LOGTEST", "Today date is grater than given date" )
+                        } else if (formattedSettingsDate.compareTo(formattedTodayDate)!! < 0) {
+                            Log.i("LOGTEST", "Today date is grater than given date")
                             addSampleData(date)
                             database?.habiteDao()?.getAll(getDateStr(date))
                             settings!!.date = date
                             database?.settingsDao()?.insertSetting(settings!!)
 
-                        } else if(formattedSettingsDate?.compareTo(formattedTodayDate) == 0 ){
-                            Log.i("LOGTEST", "Same1 date" )
+                        } else if (formattedSettingsDate?.compareTo(formattedTodayDate) == 0) {
+                            Log.i("LOGTEST", "Same1 date")
 
                         } else {
 
@@ -100,7 +103,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                     }
 
                 } else {
-                    Log.i("LOGTEST", "DID CREATE SETTINGS" )
+                    Log.i("LOGTEST", "DID CREATE SETTINGS")
                     settings = SettingsEntity()
                     database?.settingsDao()?.insertSetting(settings)
                     addSampleData()

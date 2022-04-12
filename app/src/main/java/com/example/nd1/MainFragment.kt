@@ -34,11 +34,12 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        binding.floatingActionButton.setOnClickListener{
+        binding.floatingActionButton.setOnClickListener {
             isEditing = false
             binding.editButtonMainFrag.text = getString(R.string.editBynText)
             binding.editButtonMainFrag.visibility = View.VISIBLE
-            val action = MainFragmentDirections.actionMainFragmentToAddEditFragment(habitId = NEW_HABIT_ID)
+            val action =
+                MainFragmentDirections.actionMainFragmentToAddEditFragment(habitId = NEW_HABIT_ID)
             findNavController().navigate(action)
         }
 
@@ -53,13 +54,13 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
         })
 
         binding.editButtonMainFrag.setOnClickListener {
-           if  (isEditing) {
-               isEditing = false
-               binding.editButtonMainFrag.text = getString(R.string.editBynText)
-           } else {
-               isEditing = true
-               binding.editButtonMainFrag.text = getString(R.string.doneBtnText)
-           }
+            if (isEditing) {
+                isEditing = false
+                binding.editButtonMainFrag.text = getString(R.string.editBynText)
+            } else {
+                isEditing = true
+                binding.editButtonMainFrag.text = getString(R.string.doneBtnText)
+            }
             mainAdapter.notifyDataSetChanged()
         }
 
@@ -85,13 +86,13 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
     override fun onPause() {
         super.onPause()
 
-        Log.i("LOGTEST", "onPause" )
+        Log.i("LOGTEST", "onPause")
     }
 
     override fun onStart() {
         super.onStart()
         viewModel.getAllSettings()
-        Log.i("LOGTEST", "start" )
+        Log.i("LOGTEST", "start")
     }
 
     override fun didClickHabitBtn(id: Int) {
@@ -120,7 +121,7 @@ class MainFragment : Fragment(), MainAdapter.MainAdapterItemListener {
     }
 
     override fun onItemSelectionChanged(shouldDeleteItems: Boolean) {
-        if  (shouldDeleteItems) {
+        if (shouldDeleteItems) {
             binding.editButtonMainFrag.visibility = View.INVISIBLE
         } else {
             binding.editButtonMainFrag.visibility = View.VISIBLE
