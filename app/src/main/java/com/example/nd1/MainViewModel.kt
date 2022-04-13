@@ -15,16 +15,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val database = AppDatabase.getInstance(app)
-    var habitList = database?.habiteDao()?.getAll(getDateStr(Calendar.getInstance().time))
+    var habitList = database?.habiteDao()?.getAll()
     var currentHabit = MutableLiveData<HabitEntity>()
     var currentSettings = MutableLiveData<SettingsEntity>()
 
 
-    private fun addSampleData() {
+    private fun updateForNewDate() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val sampleHabits = SampleDataProvider.getHabits()
@@ -56,16 +57,23 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         return formatter.format(date)
     }
 
-    private fun addSampleData(currentDate: Date) {
-        val habitList = mutableListOf<HabitEntity>()
+    private fun updateForNewDate(currentDate: Date) {
 
-        for (index in 0 until 5) {
-            val date = Date(currentDate.time + index)
-            var habit =
-                HabitEntity("TEST $index", "TEST $index", false, date, 0, 0, getDateStr(date))
-            habitList.add(habit)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+
+                var sampleHabits = listOf<HabitEntity>()
+                sampleHabits = habitList?.value!!
+                for (habit in sampleHabits) {
+                    habit.isCompleted = false
+                }
+
+                database?.habiteDao()?.insertAll(sampleHabits)
+            }
         }
-        database?.habiteDao()?.insertAll(habitList)
+
+
+
     }
 
     fun getAllSettings() {
@@ -74,7 +82,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 var settings: SettingsEntity? =
                     database?.settingsDao()?.getSettingsById(NEW_SETTINGS_ID)
                 if (settings != null) {
-                    Log.i(TAG, "SETTINGS EXIST!")
+                   // Log.i(TAG, "SETTINGS EXIST!")
 
                     settings.date.let { it ->
 
@@ -84,29 +92,30 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                         val formattedSettingsDate = formatter.format(it)
                         val formattedTodayDate = formatter.format(date)
 
-                        if (formattedSettingsDate?.compareTo(formattedTodayDate)!! > 0) {
-                            Log.i(TAG, "Today date is less than given date")
+                        when {
+                            formattedSettingsDate.compareTo(formattedTodayDate) > 0 -> {
+                                //Log.i(TAG, "Today date is less than given date1")
 
-                        } else if (formattedSettingsDate.compareTo(formattedTodayDate)!! < 0) {
-                            Log.i(TAG, "Today date is grater than given date")
-                            addSampleData(date)
-                            database?.habiteDao()?.getAll(getDateStr(date))
-                            settings!!.date = date
-                            database?.settingsDao()?.insertSetting(settings!!)
+                            }
+                            formattedSettingsDate.compareTo(formattedTodayDate) < 0 -> {
+                                //Log.i(TAG, "Today date is grater than given date")
+                                updateForNewDate(date)
+                                settings!!.date = date
+                                database?.settingsDao()?.insertSetting(settings!!)
 
-                        } else if (formattedSettingsDate?.compareTo(formattedTodayDate) == 0) {
-                            Log.i(TAG, "Same date")
+                            }
+                            formattedSettingsDate.compareTo(formattedTodayDate) == 0 -> {
+                                //Log.i(TAG, "Same date")
 
-                        } else {
-
+                            }
+                            else -> {}
                         }
                     }
-
                 } else {
-                    Log.i(TAG, "DID CREATE SETTINGS")
+                    //Log.i(TAG, "DID CREATE SETTINGS")
                     settings = SettingsEntity()
                     database?.settingsDao()?.insertSetting(settings)
-                    addSampleData()
+                    updateForNewDate()
                 }
                 currentSettings.postValue(settings!!)
             }

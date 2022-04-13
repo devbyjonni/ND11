@@ -49,7 +49,6 @@ class MainAdapter(private val habits: List<HabitEntity>, private val listener: M
                 holder.binding.defaultCompleteImageView.visibility = View.INVISIBLE
                 holder.binding.defaultBorderImageView.visibility = View.INVISIBLE
                 holder.binding.completedImageView.visibility = View.INVISIBLE
-                holder.binding.completedBorderImageView.visibility = View.INVISIBLE
                 holder.binding.completedButton.visibility = View.INVISIBLE
                 holder.binding.habitButton.visibility = View.INVISIBLE
 

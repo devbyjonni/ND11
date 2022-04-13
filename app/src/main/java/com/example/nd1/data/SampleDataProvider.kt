@@ -7,10 +7,10 @@ class SampleDataProvider {
 
     companion object {
         private const val habit1 = "Meditate"
-        private const val habit2 = "Code lessons"
+        private const val habit2 = "Yoga"
         private const val habit3 = "Workout"
         private const val habit4 = "Read"
-        private const val habit5 = "Medicine"
+        private const val habit5 = "Vitamins"
 
         private fun getDate(diff: Long): Date {
             return Date(Date().time + diff)

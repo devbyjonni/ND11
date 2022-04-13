@@ -74,8 +74,6 @@ class TimerFragment : Fragment() {
             timerLengthSeconds = it.timerSeconds
             secondsRemaining = it.timerSeconds
 
-            timerLengthSeconds = 5
-            secondsRemaining = 5
 
             if (it.isCompleted) {
                 binding.timerCompletedImageView.visibility = View.VISIBLE
@@ -133,7 +131,7 @@ class TimerFragment : Fragment() {
                 binding.timerCancelButton.text = getString(R.string.cancel)
             }
         }
-        Log.i(TAG, timerState.toString())
+        //Log.i(TAG, timerState.toString())
     }
 
     private fun startTimer() {
@@ -146,7 +144,7 @@ class TimerFragment : Fragment() {
             override fun onTick(millisUntilFinished: Long) {
                 secondsRemaining = millisUntilFinished / 1000
                 updateCountdownUI()
-                Log.i(TAG, "TIC")
+                //Log.i(TAG, "TIC")
             }
         }.start()
     }
@@ -182,7 +180,7 @@ class TimerFragment : Fragment() {
     }
 
     private fun saveAndReturn(): Boolean {
-        Log.i(TAG, "saveAndReturn")
+        //Log.i(TAG, "saveAndReturn")
         stopTimer()
         findNavController().navigateUp()
 

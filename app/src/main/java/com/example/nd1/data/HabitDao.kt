@@ -9,7 +9,7 @@ interface HabitDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHabit(habit: HabitEntity)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(habits: List<HabitEntity>)
 
     @Query("SELECT * FROM habits ORDER BY date ASC")
